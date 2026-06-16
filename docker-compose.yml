@@ -1,0 +1,48 @@
+services:
+  # --- Medusa Backend ---
+  medusa-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: go-amrit-backend
+    restart: always
+    ports:
+      - "9000:9000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./backend/uploads:/app/public/uploads
+
+  # --- Next.js Frontend ---
+  next-storefront:
+    build:
+      context: ./storefront
+      dockerfile: Dockerfile
+    container_name: go-amrit-storefront
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://api.goamrit.com
+      - NEXT_PUBLIC_RAZORPAY_KEY=${NEXT_PUBLIC_RAZORPAY_KEY}
+    depends_on:
+      - medusa-backend
+
+  # --- Nginx Proxy & SSL ---
+  nginx-proxy:
+    image: nginx:latest
+    container_name: go-amrit-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    depends_on:
+      - next-storefront
+      - medusa-backend

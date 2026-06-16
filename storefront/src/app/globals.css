@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+
+  --color-brand-primary: hsl(45, 90%, 45%);
+  --color-brand-deep: hsl(220, 25%, 12%);
+  --color-brand-cream: hsl(40, 30%, 96%);
+  --color-brand-sand: hsl(40, 20%, 85%);
+  --color-brand-gold: hsl(45, 100%, 50%);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-brand-deep font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6, .serif {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .glass-header {
+    @apply sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-brand-sand/30;
+  }
+
+  .premium-card {
+    @apply bg-white rounded-3xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 border border-brand-sand/20;
+  }
+
+  .btn-primary {
+    @apply bg-brand-primary text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-brand-deep transition-all transform active:scale-95 shadow-lg hover:shadow-brand-primary/25;
+  }
+}
+
+/* Custom Keyframes for Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-entrance {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

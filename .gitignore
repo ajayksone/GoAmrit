@@ -1,0 +1,37 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Next.js build output
+.next/
+**/.next/
+out/
+**/out/
+
+# Medusa build & cache
+.medusa/
+**/.medusa/
+dist/
+**/dist/
+.cache/
+**/.cache/
+
+# Uploads and static assets that shouldn't be in git
+/backend/uploads/
+/backend/static/
+**/uploads/
+
+# Environment files (sensitive data)
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.template
+**/.env.template
+
+# System files & logs
+.DS_Store
+*.log
+**/*.log
+*.tsbuildinfo
+**/*.tsbuildinfo
