@@ -1,0 +1,18 @@
+# Ignore backend code and node modules
+backend
+nginx
+deploy
+.git
+node_modules
+**/node_modules
+.next
+**/.next
+out
+**/out
+.medusa
+.cache
+dist
+.env*.local
+.env
+.env.development
+.env.production

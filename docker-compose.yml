@@ -19,7 +19,7 @@ services:
   # --- Next.js Frontend ---
   next-storefront:
     build:
-      context: ./storefront
+      context: ./
       dockerfile: Dockerfile
     container_name: go-amrit-storefront
     restart: always

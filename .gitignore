@@ -35,3 +35,8 @@ dist/
 **/*.log
 *.tsbuildinfo
 **/*.tsbuildinfo
+
+# Next.js typescript declaration
+next-env.d.ts
+/next-env.d.ts
+
