@@ -22,12 +22,12 @@ export const POST = async (
   
   let settings
   if (id) {
-    settings = await cmsService.updateCMSSettings(id, rest)
+    settings = await cmsService.updateCMSSettings({ id, ...rest })
   } else {
     // Check if key exists
     const existing = await cmsService.listCMSSettings({ key })
     if (existing.length > 0) {
-      settings = await cmsService.updateCMSSettings(existing[0].id, rest)
+      settings = await cmsService.updateCMSSettings({ id: existing[0].id, ...rest })
     } else {
       settings = await cmsService.createCMSSettings({ key, ...rest })
     }

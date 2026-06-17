@@ -22,7 +22,7 @@ export const GET = async (
   )
 
   // Fetch categories for all posts to build View links
-  const allCategoryIds = [...new Set(blog_posts.flatMap(p => p.category_ids || []))]
+  const allCategoryIds = [...new Set((blog_posts as any[]).flatMap((p: any) => p.category_ids || []))]
   let categoriesMap: Record<string, any> = {}
   
   if (allCategoryIds.length > 0) {
@@ -30,9 +30,9 @@ export const GET = async (
     categoriesMap = categories.reduce((acc, cat) => ({ ...acc, [cat.id]: cat }), {})
   }
 
-  const postsWithCategories = blog_posts.map(post => ({
+  const postsWithCategories = (blog_posts as any[]).map((post: any) => ({
     ...post,
-    categories: (post.category_ids || []).map(id => categoriesMap[id]).filter(Boolean)
+    categories: ((post.category_ids || []) as any[]).map((id: any) => categoriesMap[id]).filter(Boolean)
   }))
 
   res.json({

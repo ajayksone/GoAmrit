@@ -10,12 +10,7 @@ module.exports = defineConfig({
       adminCors: process.env.ADMIN_CORS!,
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
-      cookieSecret: process.env.COOKIE_SECRET || "supersecret",
-      payloadLimit: "50mb",
-      bodyParser: {
-        json: { limit: "50mb" },
-        urlencoded: { limit: "50mb" },
-      }
+      cookieSecret: process.env.COOKIE_SECRET || "supersecret"
     }
   },
   modules: [

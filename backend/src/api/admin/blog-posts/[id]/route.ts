@@ -25,10 +25,9 @@ export const POST = async (
   res: MedusaResponse
 ) => {
   const cmsService: CMSService = req.scope.resolve(CMS_MODULE)
-  
   const blog_post = await cmsService.updateBlogPosts({
     id: req.params.id,
-    ...req.body
+    ...(req.body as any)
   })
 
   res.json({ blog_post })
