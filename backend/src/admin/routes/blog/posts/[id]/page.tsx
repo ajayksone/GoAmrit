@@ -10,6 +10,7 @@ import SEOExtension from "../../../../components/SEOExtension"
 const EditBlogPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const storefrontUrl = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:3000"
   const [formData, setFormData] = useState({
     title: "",
     handle: "",
@@ -299,7 +300,7 @@ const EditBlogPostPage = () => {
                 <div className="flex items-center justify-between text-sm">
                    <span className="text-gray-500">Public URL:</span>
                    <a 
-                    href={`http://localhost:3000/blog/${(formData as any).categories?.[0]?.handle || 'stories'}/${formData.handle}`} 
+                    href={`${storefrontUrl}/blog/${(formData as any).categories?.[0]?.handle || 'stories'}/${formData.handle}`} 
                     target="_blank" 
                     rel="noreferrer"
                     className="text-blue-500 hover:underline flex items-center gap-x-1"

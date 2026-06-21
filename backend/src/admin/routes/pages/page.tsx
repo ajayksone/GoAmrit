@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"
 const PagesPage = () => {
   const [data, setData] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const storefrontUrl = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:3000"
 
   const fetchPages = async () => {
     setIsLoading(true)
@@ -74,7 +75,7 @@ const PagesPage = () => {
                     <Button variant="secondary" size="small">Edit</Button>
                   </Link>
                   <a 
-                    href={`http://localhost:3000/${page.handle}`} 
+                    href={`${storefrontUrl}/${page.handle}`} 
                     target="_blank" 
                     rel="noreferrer"
                   >

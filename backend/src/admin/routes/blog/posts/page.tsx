@@ -6,6 +6,7 @@ import { Eye } from "@medusajs/icons"
 
 const BlogPostsPage = () => {
   const [data, setData] = useState<any>(null)
+  const storefrontUrl = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:3000"
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -52,7 +53,7 @@ const BlogPostsPage = () => {
                     <Button variant="secondary" size="small">Edit</Button>
                   </Link>
                   <a 
-                    href={`http://localhost:3000/blog/${post.categories?.[0]?.handle || 'stories'}/${post.handle}`} 
+                    href={`${storefrontUrl}/blog/${post.categories?.[0]?.handle || 'stories'}/${post.handle}`} 
                     target="_blank" 
                     rel="noreferrer"
                   >

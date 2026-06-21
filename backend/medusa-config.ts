@@ -11,7 +11,11 @@ module.exports = defineConfig({
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret"
-    }
+    },
+    workerMode: (process.env.MEDUSA_WORKER_MODE as "shared" | "worker" | "server") || "shared"
+  },
+  admin: {
+    disable: process.env.DISABLE_MEDUSA_ADMIN === "true",
   },
   modules: [
     {

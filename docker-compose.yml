@@ -1,4 +1,27 @@
 services:
+  # --- Databases ---
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: go-amrit-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Kunj#477}
+      POSTGRES_DB: medusa_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis-cache:
+    image: redis:7-alpine
+    container_name: go-amrit-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
   # --- Medusa Backend ---
   medusa-backend:
     build:
@@ -11,10 +34,13 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - REDIS_URL=${REDIS_URL}
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-Kunj#477}@postgres-db:5432/medusa_db
+      - REDIS_URL=redis://redis-cache:6379
     volumes:
       - ./backend/uploads:/app/public/uploads
+    depends_on:
+      - postgres-db
+      - redis-cache
 
   # --- Next.js Frontend ---
   next-storefront:
@@ -28,6 +54,7 @@ services:
     environment:
       - NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://api.goamrit.com
       - NEXT_PUBLIC_RAZORPAY_KEY=${NEXT_PUBLIC_RAZORPAY_KEY}
+      - MEDUSA_INTERNAL_BACKEND_URL=http://medusa-backend:9000
     depends_on:
       - medusa-backend
 
@@ -46,3 +73,8 @@ services:
     depends_on:
       - next-storefront
       - medusa-backend
+
+volumes:
+  postgres_data:
+  redis_data:
+
