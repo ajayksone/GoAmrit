@@ -81,9 +81,13 @@ export default async function Page({ params }: any) {
   // Case 2: Product
   console.log(`[Server] Identifying product for slug: ${slug}`);
   try {
+    // Fetch active regions dynamically
+    const { regions } = await sdk.store.region.list();
+    const activeRegionId = regions?.[0]?.id;
+
     const { products } = await sdk.store.product.list({ 
        handle: slug,
-       region_id: "reg_01KMMD54SSHGRN8HK9F6HECMJT", // India Region ID
+       ...(activeRegionId && { region_id: activeRegionId }),
        fields: "*variants,*variants.prices,*variants.calculated_price"
     });
     
@@ -91,7 +95,7 @@ export default async function Page({ params }: any) {
         // Safe serialization for Client Components
         const product = JSON.parse(JSON.stringify(products[0]));
         const { products: allProducts } = await sdk.store.product.list({
-           region_id: "reg_01KMMD54SSHGRN8HK9F6HECMJT", // India Region ID
+           ...(activeRegionId && { region_id: activeRegionId }),
            fields: "*variants,*variants.prices,*variants.calculated_price"
         });
         const relatedProducts = JSON.parse(JSON.stringify(
