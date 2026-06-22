@@ -9,7 +9,9 @@ echo "============================================="
 # 1. Update packages and install dependencies
 echo "--- Step 1: Installing System Packages ---"
 sudo apt-get update -y
-sudo apt-get install -y nodejs npm postgresql postgresql-contrib git build-essential nginx certbot python3-certbot-nginx
+sudo apt-get install -y curl
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs postgresql postgresql-contrib git build-essential nginx certbot python3-certbot-nginx
 
 # Install PM2 globally
 sudo npm install -g pm2
